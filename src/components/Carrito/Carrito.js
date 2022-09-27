@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./Styles.css";
+import Card from "../../images/zapa.jpg";
 
 
 const Carrito = ({ fdata }) => {
@@ -34,10 +35,10 @@ const Carrito = ({ fdata }) => {
                     <div className="carrito__center">
                         <div className="carrito__item">
                             <div>
-                               <p>{fdata.title}</p>
+                               <p>{fdata}</p>
                             </div>
-                            <img src={fdata.image} alt="" />
-                            <p>{fdata.price}</p>
+                            <img src={Card} alt="" />
+                            <p>{fdata}</p>
                         </div>
                     </div>
                 </div>
