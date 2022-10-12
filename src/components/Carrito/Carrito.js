@@ -1,50 +1,37 @@
-import { useState } from "react";
-import "./Styles.css";
-import Card from "../../images/zapa.jpg";
+import Card from "../../images/img08.jpg";
 
-
-const Carrito = ({ fdata }) => {
-
-    const [menu, setMenu] = useState(false);
-
-    const show1 = menu ? "carritos show" : "carritos";
-    const show2 = menu ? "carrito show" : "carrito";
-
-    const toogleFalse = () => {
-        setMenu(false);
-    }
-
-    const toogleMenu = () => {
-        setMenu(!menu);
-    }
-
-    return (
-        <div>
-            <div>
-                <button className="carro" onClick={toogleMenu}>
-                    Carrito
-                </button>
-            </div>
-
-            <div className={show1}>
-                <div className={show2}>
-                    <div className="carrito__close" onClick={toogleFalse}>
-                        <span>X</span>
-                    </div>
-                    <h2>Su carrito</h2>
-                    <div className="carrito__center">
-                        <div className="carrito__item">
-                            <div>
-                               <p>{fdata}</p>
-                            </div>
-                            <img src={Card} alt="" />
-                            <p>{fdata}</p>
+const Carrito = () => {
+    return(
+        <div className="carritos show">
+            <div className="carrito show">
+                <div className="carrito__close">
+                    <box-icon name="x"></box-icon>
+                </div>
+                <h2>Su carrito</h2>
+                <div className="carrito__center">
+                    
+                    <div className="carrito__item">
+                        <img src={Card} alt="card" />
+                        <div>
+                            <h3>title</h3>    
+                            <p className="price">$345</p>
+                        </div>
+                        <div>
+                            <box-icon name="up-arrow" type="solid"></box-icon>
+                            <p className="cantidad">1</p>
+                            <box-icon name="down-arrow" type="solid"></box-icon>
+                        </div>
+                        <div className="remove__item">
+                            <box-icon name="trash"></box-icon>
                         </div>
                     </div>
                 </div>
-            </div>
+                <div className="carrito__footer">
+                    <h3>Total: $2334</h3>
+                    <button className="btn">Payment</button>
+                </div>
+            </div>    
         </div>
-
     )
 }
 
