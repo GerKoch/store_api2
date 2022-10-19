@@ -5,6 +5,7 @@ export const DataCocntext = createContext();
 
 export const DataProvider = (props) => {
     const [productos, setPrtoductos] = useState([]);
+    const [menu, setMenu] = useState(false);
 
     useEffect(() => {
         const producto = Data.items
@@ -16,7 +17,8 @@ export const DataProvider = (props) => {
     }, []);
 
     const value = {
-        productos: [productos]
+        productos: [productos],
+        menu: [menu, setMenu]
     }
 
     return(
