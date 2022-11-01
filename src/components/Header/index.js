@@ -7,6 +7,7 @@ export const Header = () => {
 
     const value = useContext(DataCocntext);
     const [menu, setMenu] = value.menu;
+    const [carrito] = value.carrito;
 
 
     const toogleMenu = () => {
@@ -31,7 +32,7 @@ export const Header = () => {
             </ul>
             <div className="cart" onClick={toogleMenu}>
                 <box-icon name="cart"></box-icon>
-                <span className="item__total">0</span>
+                <span className="item__total">{carrito.length}</span>
 
             </div>
         </header>

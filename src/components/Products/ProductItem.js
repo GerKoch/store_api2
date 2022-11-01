@@ -1,4 +1,12 @@
+import { useContext } from "react";
+import { DataCocntext } from "../Context/DataProvider";
+
+
 export const ProductItem = ({ data }) => {
+ 
+    const value = useContext(DataCocntext);
+    const addCarrito = value.addCarrito;
+ 
     return(
         <div className="producto">
                     <a href="#">
@@ -12,7 +20,7 @@ export const ProductItem = ({ data }) => {
                         <p className="price">${data.price}</p>
                     </div>
                     <div className="button">
-                        <button className="btn">Añadir al carrito</button>
+                        <button className="btn" onClick={() => addCarrito(data.id)}>Añadir al carrito</button>
                         <div>
                             <a href="#" className="btn">
                                 Vista
