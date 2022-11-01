@@ -31,6 +31,17 @@ export const DataProvider = (props) => {
         }
     }
 
+    useEffect(() =>{
+        const dataCarrito = JSON.parse(localStorage.getItem('dataCarrito'))
+        if(dataCarrito){
+            setCarrito(dataCarrito)
+        }
+    }, [])
+
+    useEffect(() =>{
+        localStorage.setItem('dataCarrito', JSON.stringify(carrito))
+    },[carrito])
+
     const value = {
         productos: [productos],
         menu: [menu, setMenu],
