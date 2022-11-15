@@ -1,11 +1,15 @@
+import { createMemoryHistory } from "@remix-run/router";
 import { useContext } from "react";
 import Card from "../../images/img08.jpg";
 import { DataCocntext } from "../Context/DataProvider";
 
 const Carrito = () => {
-    
+
     const value = useContext(DataCocntext);
     const [menu, setMenu] = value.menu
+    const [carrito, setCarrito] = value.carrito;
+    const [total] = value.total;
+
 
     const tooglefalse = () => {
         setMenu(false);
@@ -14,8 +18,37 @@ const Carrito = () => {
     const show1 = menu ? "carritos show" : "carritos";
     const show2 = menu ? "carrito show" : "carrito";
 
+    const resta = (id) => {
+        carrito.forEach(item => {
+            if (item.id === id) {
+                item.cantidad === 1 ? item.cantidad = 1 : item.cantidad -= 1;
+            }
+            setCarrito([...carrito]);
+        })
+    }
 
-    return(
+    const suma = (id) => {
+        carrito.forEach(item => {
+            if (item.id === id) {
+                item.cantidad += 1;
+            }
+            setCarrito([...carrito]);
+        })
+    }
+
+    const removePorducto = id => {
+        if (window.confirm("¿Desea eliminar éste producto?")) {
+            carrito.forEach((item, index) => {
+                if (item.id === id) {
+                    item.cantidad = 1;
+                    carrito.splice(index, 1)
+                }
+            })
+        }
+        setCarrito([...carrito]);
+    }
+
+    return (
         <div className={show1}>
             <div className={show2}>
                 <div className="carrito__close" onClick={tooglefalse}>
@@ -23,76 +56,42 @@ const Carrito = () => {
                 </div>
                 <h2>Su carrito</h2>
                 <div className="carrito__center">
-                    
-                    <div className="carrito__item">
-                        <img src={Card} alt="card" />
-                        <div>
-                            <h3>Nike Dunk Low Off-White University</h3>    
-                            <p className="price">$345</p>
-                        </div>
-                        <div>
-                            <box-icon name="up-arrow" type="solid"></box-icon>
-                            <p className="cantidad">1</p>
-                            <box-icon name="down-arrow" type="solid"></box-icon>
-                        </div>
-                        <div className="remove__item">
-                            <box-icon name="trash"></box-icon>
-                        </div>
-                    </div>
+                    {
+                        carrito.length === 0
+                            ?
+                            <h2 style={{ textAlign: "center", fontSize: "3rem" }}>El carrito está vacío</h2>
+                            :
+                            <>
+                                {carrito.map(producto => (
+                                    <div className="carrito__item" key={producto.id}>
+                                        <img src={producto.image} alt="" />
+                                        <div>
+                                            <h3>{producto.title}</h3>
+                                            <p className="price">${producto.price}</p>
+                                        </div>
+                                        <div>
+                                            <box-icon name="up-arrow" type="solid" onClick={() => suma(producto.id)}></box-icon>
+                                            <p className="cantidad">{producto.cantidad}</p>
+                                            <box-icon name="down-arrow" type="solid" onClick={() => resta(producto.id)}></box-icon>
+                                        </div>
+                                        <div className="remove__item" onClick={() => removePorducto(producto.id)}>
+                                            <box-icon name="trash"></box-icon>
+                                        </div>
+                                    </div>
+                                ))
+                                }
+                            </>
 
-                    <div className="carrito__item">
-                        <img src={Card} alt="card" />
-                        <div>
-                            <h3>Nike Dunk Low Off-White University</h3>    
-                            <p className="price">$345</p>
-                        </div>
-                        <div>
-                            <box-icon name="up-arrow" type="solid"></box-icon>
-                            <p className="cantidad">1</p>
-                            <box-icon name="down-arrow" type="solid"></box-icon>
-                        </div>
-                        <div className="remove__item">
-                            <box-icon name="trash"></box-icon>
-                        </div>
-                    </div>
+                    }
 
-                    <div className="carrito__item">
-                        <img src={Card} alt="card" />
-                        <div>
-                            <h3>Nike Dunk Low Off-White University</h3>    
-                            <p className="price">$345</p>
-                        </div>
-                        <div>
-                            <box-icon name="up-arrow" type="solid"></box-icon>
-                            <p className="cantidad">1</p>
-                            <box-icon name="down-arrow" type="solid"></box-icon>
-                        </div>
-                        <div className="remove__item">
-                            <box-icon name="trash"></box-icon>
-                        </div>
-                    </div>
 
-                    <div className="carrito__item">
-                        <img src={Card} alt="card" />
-                        <div>
-                            <h3>Nike Dunk Low Off-White University</h3>    
-                            <p className="price">$345</p>
-                        </div>
-                        <div>
-                            <box-icon name="up-arrow" type="solid"></box-icon>
-                            <p className="cantidad">1</p>
-                            <box-icon name="down-arrow" type="solid"></box-icon>
-                        </div>
-                        <div className="remove__item">
-                            <box-icon name="trash"></box-icon>
-                        </div>
-                    </div>
+
                 </div>
                 <div className="carrito__footer">
-                    <h3>Total: $2334</h3>
+                    <h3>Total: ${total}</h3>
                     <button className="btn">Payment</button>
                 </div>
-            </div>    
+            </div>
         </div>
     )
 }
